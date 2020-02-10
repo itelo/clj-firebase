@@ -5,7 +5,11 @@
             [etaoin.keys :as k]
             [etaoin.api :refer :all]))
 
-
+(defn cloj 
+  [x]
+  (let [y (query x { :div :class "transactions" })]         
+      (print y)
+          ))
 
 (def driver (firefox)) ;; here, a Firefox window should appear
 
@@ -19,11 +23,19 @@
       (click {:tag :input :type :submit})
       (wait-visible [{:tag :button :class "button button-empty button-clear col-12" }])
       (click {:tag :button :class "button button-empty button-clear col-12"})
-    )
+      (wait-visible [{:tag :div :class "select-style"}])
+      (click {:tag :div :class "select-style"})
+      (click {:tag :option :value "LAST_FIFTY_DAYS"})
+      (wait 3)
+      (cloj)
+      (quit))
+)
 
 
 
-  (def basic-url "https://firestore.googleapis.com/v1/projects/yanb-ab5c1/databases/(default)/documents/"))
+
+
+(def basic-url "https://firestore.googleapis.com/v1/projects/yanb-ab5c1/databases/(default)/documents/")
 
 (defn -main
   "I don't do a whole lot ... yet."
